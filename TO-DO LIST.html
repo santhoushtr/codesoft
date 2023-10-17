@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        #todoApp {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 8px 0;
+        }
+        button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="todoApp">
+        <h2>To-Do List</h2>
+        <input type="text" id="taskInput" placeholder="Add a new task">
+        <button onclick="addTask()">Add</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Check for saved tasks in local storage
+        const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        // Display existing tasks
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = savedTasks.map(task => `<li>${task} <button onclick="deleteTask('${task}')">Delete</button></li>`).join('');
+
+        // Function to add a new task
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const newTask = taskInput.value.trim();
+
+            if (newTask !== '') {
+                // Update the tasks array
+                savedTasks.push(newTask);
+
+                // Update local storage
+                localStorage.setItem('tasks', JSON.stringify(savedTasks));
+
+                // Update the task list
+                taskList.innerHTML += `<li>${newTask} <button onclick="deleteTask('${newTask}')">Delete</button></li>`;
+
+                // Clear the input field
+                taskInput.value = '';
+            }
+        }
+
+        // Function to delete a task
+        function deleteTask(task) {
+            // Update the tasks array
+            const index = savedTasks.indexOf(task);
+            if (index !== -1) {
+                savedTasks.splice(index, 1);
+
+                // Update local storage
+                localStorage.setItem('tasks', JSON.stringify(savedTasks));
+
+                // Update the task list
+                const listItem = taskList.querySelector(`li:contains('${task}')`);
+                listItem.remove();
+            }
+        }
+
+        // Custom jQuery-like :contains selector
+        // Used for finding and removing the correct list item when deleting a task
+        // This is a simple implementation and may not cover all cases
+        // For a production environment, consider using a more robust solution
+        document.querySelectorAll(':contains').forEach(el => {
+            el.remove();
+        });
+        document.createElement(':contains');
+    </script>
+</body>
+</html>

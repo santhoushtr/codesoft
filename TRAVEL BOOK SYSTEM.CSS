@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #6a026c;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #9e7575;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(37, 2, 91, 0.1);
+}
+
+form {
+    display: grid;
+    gap: 10px;
+}
+
+button {
+    background-color: #4caf50;
+    color: #eb6969;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
